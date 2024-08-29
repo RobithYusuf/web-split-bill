@@ -118,21 +118,9 @@
                 const oldPercentage = person.percentage;
                 person.percentage = parseInt(newPercentage);
                 const diff = person.percentage - oldPercentage;
+                document.getElementById(`percentage${id}`).textContent = `${person.percentage}%`;
                 redistributePercentages(id, diff);
                 updateCalculations();
-            }
-        }
-
-        function removePerson(id) {
-            const index = people.findIndex(p => p.id === id);
-            if (index !== -1 && people.length > 1) {
-                people.splice(index, 1);
-                const personDiv = document.querySelector(`#peopleContainer > div:nth-child(${index + 1})`);
-                personDiv.remove();
-                redistributePercentages();
-                updateCalculations();
-            } else {
-                alert("Harus ada minimal satu orang dalam pembagian tagihan.");
             }
         }
 
@@ -156,6 +144,21 @@
                 });
             }
         }
+
+        function removePerson(id) {
+            const index = people.findIndex(p => p.id === id);
+            if (index !== -1 && people.length > 1) {
+                people.splice(index, 1);
+                const personDiv = document.querySelector(`#peopleContainer > div:nth-child(${index + 1})`);
+                personDiv.remove();
+                redistributePercentages();
+                updateCalculations();
+            } else {
+                alert("Harus ada minimal satu orang dalam pembagian tagihan.");
+            }
+        }
+
+       
 
         function formatIDR(amount) {
             return new Intl.NumberFormat('id-ID', {
