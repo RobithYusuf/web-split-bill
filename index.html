@@ -8,10 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
-
     <link rel="stylesheet" href="styles.css?v=1.0.1">
-
-
 </head>
 
 <body>
@@ -52,8 +49,6 @@
             </div>
         </footer>
     </div>
-
-
 
     <script>
         let peopleCount = 0;
@@ -147,14 +142,13 @@
 
             if (remainingPercentage !== 0) {
                 const unchangedPeople = people.filter(p => p.id !== changedId);
-                const totalUnchangedPercentage = unchangedPeople.reduce((sum, person) => sum + person.percentage, 0);
+                const sharePerPerson = Math.floor(remainingPercentage / unchangedPeople.length);
+                const remainderAfterShare = remainingPercentage % unchangedPeople.length;
 
-                unchangedPeople.forEach(person => {
-                    if (totalUnchangedPercentage > 0) {
-                        const share = person.percentage / totalUnchangedPercentage;
-                        person.percentage += Math.round(remainingPercentage * share);
-                    } else {
-                        person.percentage += Math.round(remainingPercentage / unchangedPeople.length);
+                unchangedPeople.forEach((person, index) => {
+                    person.percentage += sharePerPerson;
+                    if (index === 0) {
+                        person.percentage += remainderAfterShare;
                     }
                     document.getElementById(`slider${person.id}`).value = person.percentage;
                     document.getElementById(`percentage${person.id}`).textContent = `${person.percentage}%`;
